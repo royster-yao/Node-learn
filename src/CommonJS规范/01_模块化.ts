@@ -18,5 +18,5 @@
  */
 
 const m1 = require("./m1")
-const path = require('path')
+// const path = require('path')
 console.log(m1);
