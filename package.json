@@ -1,4 +1,10 @@
 {
+  "name": "node-learn",
+  "version": "1.0.0",
+  "description": "leaning-node by ts",
+  "author": {
+    "name": "yao"
+  },
   "dependencies": {
     "@types/node": "^18.15.3",
     "ts-node": "^10.9.1"
