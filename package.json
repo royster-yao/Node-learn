@@ -2,11 +2,16 @@
   "name": "node-learn",
   "version": "1.0.0",
   "description": "leaning-node by ts",
+  "main": "index.ts",
   "author": {
     "name": "yao"
   },
   "dependencies": {
     "@types/node": "^18.15.3",
+    "express": "^4.18.2",
     "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
   }
 }
