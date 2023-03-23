@@ -1,23 +1,23 @@
 const express5 = require("express")
 const path7 = require("node:path")
 const app5 = express5()
-const Students = [
-    {
-        name:"孙悟空",
-        age:'18',
-        address:'花果山'
-    },
-    {
-        name:"猪八戒",
-        age:'28',
-        address:'高老庄'
-    },
-    {
-        name:"沙和尚",
-        age:'38',
-        address:'流沙河'
-    },
-]
+// const Students = [
+//     {
+//         name:"孙悟空",
+//         age:'18',
+//         address:'花果山'
+//     },
+//     {
+//         name:"猪八戒",
+//         age:'28',
+//         address:'高老庄'
+//     },
+//     {
+//         name:"沙和尚",
+//         age:'38',
+//         address:'流沙河'
+//     },
+// ]
 // 将ejs设置为默认的模板引擎
 app5.set("view engine","ejs")
 

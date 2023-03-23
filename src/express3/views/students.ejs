@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>这是ejs模板</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px #000 solid;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <% for (const stu of Students) { %> <%= stu.name %> <%= stu.age %> <%=
+    stu.address %>
+    <br />
+    <%} %>
+    <hr />
+    <table>
+      <caption>
+        学生列表
+      </caption>
+      <thead>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>地址</th>
+      </thead>
+      <tbody>
+        <% for (const stu of Students) { %>
+        <tr>
+          <td><%=stu.id %></td>
+          <td><%=stu.name %></td>
+          <td><%=stu.gender %></td>
+          <td><%=stu.age %></td>
+          <td><%=stu.address %></td>
+        </tr>
+        <%} %>
+      </tbody>
+    </table>
+    <hr />
+    <form action="/add-stu" method="post">
+      <div>姓名：<input type="text" name="name" /></div>
+      <div>年龄：<input type="number" max="100" min="0" name="age" /></div>
+      <div>
+        性别： <input type="radio" name="gender" value="男" />男
+        <input type="radio" name="gender" value="女" />女
+      </div>
+      <div>地址：<input type="text" name="address" /></div>
+      <div>
+        <button>添加</button>
+      </div>
+    </form>
+  </body>
+</html>
