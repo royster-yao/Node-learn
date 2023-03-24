@@ -17,11 +17,12 @@
     </style>
   </head>
   <body>
-    <% for (const stu of Students) { %> <%= stu.name %> <%= stu.age %> <%=
+    <%for (const stu of Students) { %> <%= stu.name %> <%= stu.age %> <%=
     stu.address %>
     <br />
     <%} %>
     <hr />
+
     <table>
       <caption>
         学生列表
@@ -32,6 +33,7 @@
         <th>性别</th>
         <th>年龄</th>
         <th>地址</th>
+        <th>操作</th>
       </thead>
       <tbody>
         <% for (const stu of Students) { %>
@@ -41,6 +43,14 @@
           <td><%=stu.gender %></td>
           <td><%=stu.age %></td>
           <td><%=stu.address %></td>
+          <td>
+            <a
+              onclick="return confirm('确认删除吗？')"
+              href="/delete?id=<%=stu.id%>"
+              >删除</a
+            >
+            <a href="/to-update?id=<%=stu.id%>">修改</a>
+          </td>
         </tr>
         <%} %>
       </tbody>

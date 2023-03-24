@@ -2,7 +2,7 @@ const express6 = require("express")
 const path8 = require("node:path")
 const app6 = express6()
 const fs2 = require("node:fs/promises")
-const Students  = require("./data/students.json")
+let Students  = require("./data/students.json")
 // 将ejs设置为默认的模板引擎
 app6.set("view engine","ejs")
 
@@ -11,8 +11,75 @@ app6.use(express6.static(path8.resolve(__dirname,"public")) )
 
 //配置请求体解析
 // app6.use(express6.urlencoded({extended : true}))
-app6.use(express6.urlencoded())
+app6.use(express6.urlencoded({extended:true}))
 // app6.use(express6.json())
+/**
+ *   删除
+ *      - 点击删除链接后，删除当前数据
+ *      - 流程：
+ *          1. 点击删除的链接       
+ *          2. 向路由发送请求
+ *          3. 路由怎么写？
+ *              - 获取学生的id n
+ *              - 删除id为n的学生
+ *              - 将新的数组写入文件
+ *              - 重定向到学生列表页面
+ */
+app6.get("/delete",(req: { query: { id: string | number } },res: { redirect: (arg0: string) => void })=>{
+    // 获取要删除学生的id
+    const id = +req.query.id
+    // 根据id删除学生
+    Students = Students.filter((stu: { id: number }) => stu.id !== id)
+    // 将新的
+    // 将新的数据写入到json文件中
+    fs2.writeFile(path8.resolve(__dirname,
+        "./data/students.json"),
+    JSON.stringify(Students)).then(()=>{
+    res.redirect("/students")
+    }).catch(()=>{
+        
+    })
+})
+
+/**
+ *  修改
+ *      - 点击修改链接，显示已表单，要有该有修改的学生的信息
+ *      - 用户对学生信息进行修改，修改后点击修改链接按钮提交表单
+ *      - 流程：
+ *          1.点击修改链接
+ *          2.跳转到路由
+ *              - 这个路由会返回一个页面，页面有一个表单，表单有需要修改学生的信息
+ *          3.用户填写表单，点击按钮提交到一个新的路由
+ *              - 获取学生信息，并对信息进行提交
+ */
+app6.post("/update-user",(req: { query: { id: number }; body: { name: any; age: number; gender: any; address: any } },res: any)=>{
+    const id = +req.query.id 
+    const {name ,age ,gender , address} = req.body
+    // 修改学生信息
+    const user = Students.find((item: { id: number }) => item.id = id) 
+    user.name = name
+    user.age = +age
+    user.gender = gender
+    user.address = address
+    fs2.writeFile(path8.resolve(__dirname,
+        "./data/students.json"),
+    JSON.stringify(Students)).then(()=>{
+    res.redirect("/students")
+    }).catch(()=>{
+        
+    })
+
+})
+
+
+app6.get("/to-update",(req: { query: { id: string | number } },res: { render: (arg0: string, arg1: { student: any }) => void })=>{
+    const id = +req.query.id
+    // 获取需要修改的学生信息
+    const student = Students.find((item: { id: number }) => item.id = id)
+    // console.log(student);
+    
+    res.render("update",{student})
+})
 
 
 app6.get("/hello",(req: any,res: { send: (arg0: string) => void })=>{
@@ -51,7 +118,7 @@ app6.post("/add-stu",(req: { body: any },res: any)=>{
     // 重定向的作用是告诉浏览器向另一个地址再发起一次请求
     res.redirect("/students")
     }).catch(()=>{
-
+        
     })
 
 
