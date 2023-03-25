@@ -2,7 +2,7 @@ const express6 = require("express")
 const path8 = require("node:path")
 const app6 = express6()
 const fs2 = require("node:fs/promises")
-let Students  = require("./data/students.json")
+let Students1  = require("./data/Students1.json")
 // 将ejs设置为默认的模板引擎
 app6.set("view engine","ejs")
 
@@ -29,13 +29,13 @@ app6.get("/delete",(req: { query: { id: string | number } },res: { redirect: (ar
     // 获取要删除学生的id
     const id = +req.query.id
     // 根据id删除学生
-    Students = Students.filter((stu: { id: number }) => stu.id !== id)
+    Students1 = Students1.filter((stu: { id: number }) => stu.id !== id)
     // 将新的
     // 将新的数据写入到json文件中
     fs2.writeFile(path8.resolve(__dirname,
-        "./data/students.json"),
-    JSON.stringify(Students)).then(()=>{
-    res.redirect("/students")
+        "./data/Students1.json"),
+    JSON.stringify(Students1)).then(()=>{
+    res.redirect("/Students1")
     }).catch(()=>{
         
     })
@@ -56,15 +56,15 @@ app6.post("/update-user",(req: { query: { id: number }; body: { name: any; age: 
     const id = +req.query.id 
     const {name ,age ,gender , address} = req.body
     // 修改学生信息
-    const user = Students.find((item: { id: number }) => item.id = id) 
+    const user = Students1.find((item: { id: number }) => item.id = id) 
     user.name = name
     user.age = +age
     user.gender = gender
     user.address = address
     fs2.writeFile(path8.resolve(__dirname,
-        "./data/students.json"),
-    JSON.stringify(Students)).then(()=>{
-    res.redirect("/students")
+        "./data/Students1.json"),
+    JSON.stringify(Students1)).then(()=>{
+    res.redirect("/Students1")
     }).catch(()=>{
         
     })
@@ -75,7 +75,7 @@ app6.post("/update-user",(req: { query: { id: number }; body: { name: any; age: 
 app6.get("/to-update",(req: { query: { id: string | number } },res: { render: (arg0: string, arg1: { student: any }) => void })=>{
     const id = +req.query.id
     // 获取需要修改的学生信息
-    const student = Students.find((item: { id: number }) => item.id = id)
+    const student = Students1.find((item: { id: number }) => item.id = id)
     // console.log(student);
     
     res.render("update",{student})
@@ -87,14 +87,14 @@ app6.get("/hello",(req: any,res: { send: (arg0: string) => void })=>{
 })
 
 
-app6.get("/students",(req: any,res: { render: (arg0: string, arg1: { Students: { id: number; name: string; gender: string; age: number; address: string }[] }) => void })=>{
+app6.get("/Students1",(req: any,res: { render: (arg0: string, arg1: { Students1: { id: number; name: string; gender: string; age: number; address: string }[] }) => void })=>{
 
-    res.render("students",{Students})
+    res.render("Students1",{Students1})
 })
 
 
 app6.post("/add-stu",(req: { body: any },res: any)=>{
-    const id = Students.length + 1
+    const id = Students1.length + 1
     // 获取用户填写的信息
     const newUser = {
         id,
@@ -105,18 +105,18 @@ app6.post("/add-stu",(req: { body: any },res: any)=>{
     }
     //验证用户信息
     // 将用户信息添加到数组中
-        Students.push(newUser)
+        Students1.push(newUser)
     // res.send("添加成功")
     // 直接在添加路由中渲染ejs，会面临表单重复提交的问题
-    // res.render("students",{Students})
+    // res.render("Students1",{Students1})
 
     // 将新的数据写入到json文件中
     fs2.writeFile(path8.resolve(__dirname,
-        "./data/students.json"),
-    JSON.stringify(Students)).then(()=>{
+        "./data/Students1.json"),
+    JSON.stringify(Students1)).then(()=>{
     //res.redirect()用来发起请求重定向
     // 重定向的作用是告诉浏览器向另一个地址再发起一次请求
-    res.redirect("/students")
+    res.redirect("/Students1")
     }).catch(()=>{
         
     })
